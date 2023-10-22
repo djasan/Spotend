@@ -1,74 +1,67 @@
+import { catalogue } from "./modules/catalogue";
 import { slider } from "./modules/slider.js";
-import { audio } from "./modules/audio.js";
 import { playlist } from "./modules/playlist.js";
-import { catalogue } from "./modules/catalogue.js";
+import { audio } from "./modules/audio.js";
 
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
-const playPause = document.querySelector("#playPause");
+const playPause = document.querySelector("#play-pause");
+const audioElement = document.getElementById("audio");
+
 let currentTrack = 0;
 let isPlaying = false;
+let track = null;
+let currentIndex = 0;
+const slides = document.querySelectorAll(".slide");
 
-const statusButtonPlayPause = () => {
-  if (!isPlaying) {
-    playPause.innerText = "Play";
+
+
+function togglePlayPause() {
+  if (isPlaying) {
+    audioElement.pause();
   } else {
-    playPause.innerText = "Pause";
+    audioElement.play();
   }
-};
+  isPlaying = !isPlaying;
+  updatePlayPauseButton();
+}
 
-// Gestion du bouton "prev"
+function updatePlayPauseButton() {
+  playPause.textContent = isPlaying ? "Pause" : "Play";
+}
+
 prevButton.addEventListener("click", () => {
-  currentTrack = (currentTrack - 1 + catalogue.length) % catalogue.length;
+  if (currentTrack > 0) {
+    currentTrack--;
+  } else {
+    currentTrack = catalogue.length - 1;
+  }
   slider("prev");
   audio("pause");
-  audio("init", currentTrack);
-  audio("play", currentTrack); // Pass the currentTrack argument
+  audio("init");
+  audio("play");
   isPlaying = true;
-  statusButtonPlayPause();
+  updatePlayPauseButton();
 });
 
-// Gestion du bouton "next"
 nextButton.addEventListener("click", () => {
-  currentTrack = (currentTrack + 1) % catalogue.length;
+  currentIndex = (currentIndex + 1) % slides.length;
+  updateSlides();
   slider("next");
   audio("pause");
-  audio("init", currentTrack);
-  audio("play", currentTrack); // Pass the currentTrack argument
+  audio("init");
+  audio("play");
   isPlaying = true;
-  statusButtonPlayPause();
+  updatePlayPauseButton();
 });
 
-// Gestion du bouton "playPause"
-playPause.addEventListener("click", () => {
-  if (!isPlaying) {
-    isPlaying = true;
-    audio("play", currentTrack); // Pass the currentTrack argument
-  } else {
-    isPlaying = false;
-    audio("pause");
-  }
-  statusButtonPlayPause();
-});
 
-// Initialisation de la page
+
+slides[currentIndex].querySelector("audio").play();
+
 slider("init");
-audio("init", currentTrack);
+audio("init");
 playlist();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
