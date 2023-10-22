@@ -1,77 +1,75 @@
-import { catalogue } from "./modules/catalogue.js";
 import { slider } from "./modules/slider.js";
 import { audio } from "./modules/audio.js";
+import { playlist } from "./modules/playlist.js";
+import { catalogue } from "./modules/catalogue.js";
 
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
 const playPause = document.querySelector("#playPause");
-globalThis.catalogue = catalogue;
-globalThis.track = null;
-globalThis.currentTrack = 0;
-globalThis.isPlaying = false;
+let currentTrack = 0;
+let isPlaying = false;
+
 const statusButtonPlayPause = () => {
-  if (!isPlaying)
-    playPause.innerText = "play";
-
-  else {
-    playPause.innerText = "pause";
+  if (!isPlaying) {
+    playPause.innerText = "Play";
+  } else {
+    playPause.innerText = "Pause";
   }
+};
 
-}
 // Gestion du bouton "prev"
 prevButton.addEventListener("click", () => {
-  if (currentTrack > 0) {
-    currentTrack--;
-  } else {
-    currentTrack = catalogue.length - 1;
-  }
+  currentTrack = (currentTrack - 1 + catalogue.length) % catalogue.length;
   slider("prev");
   audio("pause");
-  audio();//"init";
-  audio("play");
+  audio("init", currentTrack);
+  audio("play", currentTrack); // Pass the currentTrack argument
   isPlaying = true;
   statusButtonPlayPause();
-
 });
 
 // Gestion du bouton "next"
 nextButton.addEventListener("click", () => {
-  if (currentTrack < catalogue.length - 1) {
-    currentTrack++;
-  } else {
-    currentTrack = 0;
-  }
+  currentTrack = (currentTrack + 1) % catalogue.length;
   slider("next");
   audio("pause");
-  audio();//"init";
-  audio("play");
-  console.log(isPlaying);
+  audio("init", currentTrack);
+  audio("play", currentTrack); // Pass the currentTrack argument
   isPlaying = true;
   statusButtonPlayPause();
-
 });
+
 // Gestion du bouton "playPause"
 playPause.addEventListener("click", () => {
   if (!isPlaying) {
     isPlaying = true;
-    audio("play");
+    audio("play", currentTrack); // Pass the currentTrack argument
   } else {
     isPlaying = false;
-  
     audio("pause");
-
-
   }
   statusButtonPlayPause();
-  // isPlaying = !isPlaying
 });
 
-
-
-
-
 // Initialisation de la page
-slider();
-audio();
-playlist()
+slider("init");
+audio("init", currentTrack);
+playlist();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

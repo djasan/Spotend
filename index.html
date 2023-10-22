@@ -4,28 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>spotilight</title> <link rel="stylesheet" href="./assets/css/style.css">
+    <title>spotilight</title> 
+    <link rel="stylesheet" href="./assets/css/style.css">
 
     <link rel="stylesheet" href="./assets/css/slider.css">
-    <script type="module" src="./assets/js/script.js" defer></script>
-</head>
+    
+   
+   
 
 <body>
-
+ <h1>spotilight</h1>
 
     <div id="player">
-        <div id="slider"><div id="slider">
-            <img id="imgB" class="transSlider" src="pixies.jpg" alt="Image 1">
+        <img id="imgA" class="transSlider" src="./assets/img/cover/pixies.jpg" alt="Image 1">
           
+        
+           
+        
+        <div id="navigation">
+            <audio controls id="audioPlayer">
+                <source src="" type="audio/mp3">
+            </audio>
+            <div id="playlist">
+                <!-- Contenu de la playlist à générer -->
+            </div>
+            <button id="prev"> previous</button>
+            <button id="next">next</button>
+            <button id="playPause">play</button>
         </div>
-            <p>spotilight</p>
-        </div>
-        <div id="navigation"></div>
-        <button id="prev"> previous</button>
-        <button id="next">next</button>
-        <button id="playPause">play</button>
 
-    </div>
+    <!-- Le reste de votre contenu HTML et balises script -->
 
 
 
@@ -34,6 +42,15 @@
 
 
 
+
+
+
+
+
+
+
+
+    <script src="./assets/js/script.js" type="module" defer></script>
 </body>
 
 </html>

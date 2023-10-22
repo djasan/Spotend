@@ -3,32 +3,29 @@ const sliderHTML = document.querySelector("#slider");
 const coverUrl = "./assets/img/cover/";
 
 const initSlider = () => {
-    const coverSlider = document.createElement("img");
-    coverSlider.src = coverUrl + catalogue[currentTrack].cover;
-    coverSlider.id = "coverSlider";
-    // prepend insere un element avant ceux qui existent déjà dans le parent
-    //sliderHTML.prepend(coverSlider);
-    // append insere un element après ceux qui existent déjà dans le parent
-    sliderHTML.append(coverSlider);
+  const coverSlider = document.createElement("img");
+  coverSlider.src = coverUrl + catalogue[currentTrack].cover;
+  coverSlider.id = "coverSlider";
+  sliderHTML.append(coverSlider);
 
-    const imgA = document.createElement("img");
-    imgA.src = coverUrl + catalogue[currentTrack].cover;
-    imgA.id = "imgA";
-    sliderHTML.append(imgA);
-
+  const imgA = document.createElement("img");
+  imgA.src = coverUrl + catalogue[currentTrack].cover; // Utilisez le chemin correct
+  imgA.alt = `${catalogue[currentTrack].titre} - ${catalogue[currentTrack].artiste}`;
+  imgA.id = "imgA";
+  sliderHTML.append(imgA);
 }
 const nextSlider = () => {
-    document.querySelector("#coverSlider").src =
-      coverUrl + catalogue[currentTrack].cover;
-    document.querySelector("#imgA").classList.add("transSlider");
-    document.querySelector("#imgA").classList.add("slideRight");
-    setTimeout(() => {
-      document.querySelector("#imgA").src =
-        coverUrl + catalogue[currentTrack].cover;
+  currentTrack = (currentTrack + 1) % catalogue.length; // Mettez à jour l'indice
+  document.querySelector("#coverSlider").src = coverUrl + catalogue[currentTrack].cover;
+  document.querySelector("#imgA").classList.add("transSlider");
+  document.querySelector("#imgA").classList.add("slideRight");
+  setTimeout(() => {
+      document.querySelector("#imgA").src = coverUrl + catalogue[currentTrack].cover; // Mettez à jour la source
+      document.querySelector("#imgA").alt = `${catalogue[currentTrack].titre} - ${catalogue[currentTrack].artiste}`;
       document.querySelector("#imgA").classList.remove("transSlider");
       document.querySelector("#imgA").classList.remove("slideRight");
-    },500);
-  };
+  }, 500);
+};
 
 
 
